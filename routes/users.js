@@ -42,4 +42,29 @@ userRoute.put("/", (req, res) => {
     }
   });
 
+userRoute.post("/", (req, res) => {
+
+  const newUser = {
+    id: crypto.randomUUID(),
+    name: req.body.name,
+    MarkBucks: 0,
+    UmerCoins: 0,
+    timestamp: Date.now()
+  }
+
+  try {
+    const dataBuffer = fs.readFileSync("./data/users.json");
+    const usersData = JSON.parse(dataBuffer);
+    console.log(usersData)
+    console.log("this is new user", newUser);
+
+    usersData.push(newUser);
+
+    console.log(usersData);
+
+
+  } catch (error) {
+    res.send(error)
+  }
+});
 export default userRoute;
